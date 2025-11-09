@@ -15,7 +15,7 @@ dependencies:
   firebase_auth: ^5.7.0
 
   # ⚙️ SMS only (temporarily removed workmanager)
-  another_telephony: ^0.4.1
+  
 
   # ⚡ Utilities
   permission_handler: ^11.4.0
