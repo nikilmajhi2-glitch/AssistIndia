@@ -10,10 +10,12 @@ class Prefs {
   }
 
   static String? getUserId() => _prefs.getString(_keyUser);
-  static Future<void> setUserId(String id) async => await _prefs.setString(_keyUser, id);
+  static Future<void> setUserId(String id) async =>
+      await _prefs.setString(_keyUser, id);
 
   static int? getSimSlot() => _prefs.getInt(_keySim);
-  static Future<void> setSimSlot(int slot) async => await _prefs.setInt(_keySim, slot);
+  static Future<void> setSimSlot(int slot) async =>
+      await _prefs.setInt(_keySim, slot);
 
   static Future<void> clear() async {
     await _prefs.remove(_keyUser);

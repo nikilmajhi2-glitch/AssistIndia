@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:assistindia/utils/prefs.dart';
 import 'package:assistindia/screens/dashboard_screen.dart';
-import 'package:workmanager/workmanager.dart';
+import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:assistindia/services/background_service.dart';
 
 class BindScreen extends StatefulWidget {
@@ -15,26 +15,27 @@ class _BindScreenState extends State<BindScreen> {
   final TextEditingController _userController = TextEditingController();
   int? _selectedSim;
 
-  bool get isReady => _userController.text.trim().isNotEmpty && _selectedSim != null;
+  bool get isReady =>
+      _userController.text.trim().isNotEmpty && _selectedSim != null;
 
   void _bindAndStart() async {
     final id = _userController.text.trim();
     if (id.isEmpty || _selectedSim == null) return;
+
     await Prefs.setUserId(id);
     await Prefs.setSimSlot(_selectedSim!);
 
-    // Register periodic task (every 15 minutes is minimum on some Android; WorkManager frequency approx 15m.
-    // For dev/testing Workmanager supports shorter in debug but in production it's ~15m minimum. We still register 2min as requested.
-    Workmanager().registerPeriodicTask(
-      'assist_sms_task',
-      'assist_sms_task_worker',
-      frequency: const Duration(minutes: 2),
-      existingWorkPolicy: ExistingWorkPolicy.replace,
-      initialDelay: const Duration(seconds: 10),
+    await AndroidAlarmManager.periodic(
+      const Duration(minutes: 2),
+      0,
+      BackgroundService.runBackgroundTask,
+      wakeup: true,
+      rescheduleOnReboot: true,
     );
 
     if (!mounted) return;
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const DashboardScreen()));
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (_) => const DashboardScreen()));
   }
 
   @override
@@ -54,7 +55,8 @@ class _BindScreenState extends State<BindScreen> {
                 children: [
                   const Icon(Icons.send_rounded, size: 72, color: Color(0xFF3949AB)),
                   const SizedBox(height: 12),
-                  const Text('AssistIndia', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+                  const Text('AssistIndia',
+                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
                   const SizedBox(height: 20),
                   TextField(
                     controller: _userController,
@@ -66,7 +68,10 @@ class _BindScreenState extends State<BindScreen> {
                     onChanged: (_) => setState(() {}),
                   ),
                   const SizedBox(height: 16),
-                  Align(alignment: Alignment.centerLeft, child: Text('Select SIM Slot:', style: TextStyle(fontWeight: FontWeight.w600))),
+                  const Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text('Select SIM Slot:',
+                          style: TextStyle(fontWeight: FontWeight.w600))),
                   RadioListTile<int>(
                     value: 0,
                     groupValue: _selectedSim,
@@ -89,7 +94,8 @@ class _BindScreenState extends State<BindScreen> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF3949AB),
                       minimumSize: const Size.fromHeight(48),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12)),
                     ),
                   ),
                 ],

@@ -1,5 +1,5 @@
 name: assistindia
-description: AssistIndia - SMS Sender (com.rupeedesk) - Flutter (Dark Theme)
+description: AssistIndia - SMS Sender (com.rupeedesk) - Flutter (Dark theme)
 publish_to: "none"
 
 environment:
@@ -9,16 +9,17 @@ dependencies:
   flutter:
     sdk: flutter
 
-  # 🔥 Firebase (Official, V2-safe)
+  # 🔥 Firebase
   firebase_core: ^3.15.2
   cloud_firestore: ^5.6.12
   firebase_auth: ^5.7.0
 
-  # ⚙️ SMS (V2-safe combo: send + read)
-  flutter_sms_inbox: ^1.0.3     # for reading SMS from inbox
-  sms_sender: ^1.0.5            # for sending SMS (replaces another_telephony)
+  # ⚙️ Background + SMS (V2-safe)
+  android_alarm_manager_plus: ^4.0.3
+  flutter_sms_inbox: ^1.0.4
+  sms_sender: ^1.0.5
 
-  # ⚡ Utility Plugins (V2-safe, stable)
+  # ⚡ Utilities
   permission_handler: ^11.4.0
   shared_preferences: ^2.5.3
   provider: ^6.1.5+1

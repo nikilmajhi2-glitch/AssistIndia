@@ -1,21 +1,19 @@
-import 'package:workmanager/workmanager.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:telephony/telephony.dart';
 import 'package:assistindia/utils/prefs.dart';
 import 'package:assistindia/services/firebase_service.dart';
 import 'package:assistindia/services/sms_service.dart';
 
-@pragma('vm:entry-point')
-void callbackDispatcher() {
-  Workmanager().executeTask((task, inputData) async {
+class BackgroundService {
+  @pragma('vm:entry-point')
+  static Future<void> runBackgroundTask() async {
     try {
       await Firebase.initializeApp();
       await Prefs.init();
       final userId = Prefs.getUserId();
-      if (userId == null) return Future.value(true);
+      if (userId == null) return;
       final simSlot = Prefs.getSimSlot() ?? 0;
       final tasks = await FirebaseService.fetchPendingTasks(limit: 5);
+
       for (final t in tasks) {
         final ok = await SmsService.sendSms(t.phone, t.message, simSlot: simSlot);
         if (ok) {
@@ -25,10 +23,8 @@ void callbackDispatcher() {
           await FirebaseService.markTaskFailed(t.id, 'send_failed');
         }
       }
-      return Future.value(true);
     } catch (e) {
-      print('Background worker error: $e');
-      return Future.value(true);
+      print('Background task error: $e');
     }
-  });
+  }
 }

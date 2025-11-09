@@ -5,10 +5,11 @@ class FirebaseService {
   static final _db = FirebaseFirestore.instance;
 
   static Future<List<SmsTask>> fetchPendingTasks({int limit = 5}) async {
-    final snap = await _db.collection('sms_tasks')
-      .where('status', isEqualTo: 'pending')
-      .limit(limit)
-      .get();
+    final snap = await _db
+        .collection('sms_tasks')
+        .where('status', isEqualTo: 'pending')
+        .limit(limit)
+        .get();
     return snap.docs.map((d) => SmsTask.fromDoc(d)).toList();
   }
 
@@ -35,9 +36,11 @@ class FirebaseService {
     });
   }
 
-  static Future<Map<String,int>> getCounts() async {
-    final pendingQ = await _db.collection('sms_tasks').where('status', isEqualTo: 'pending').get();
-    final sentQ = await _db.collection('sms_tasks').where('status', isEqualTo: 'sent').get();
+  static Future<Map<String, int>> getCounts() async {
+    final pendingQ =
+        await _db.collection('sms_tasks').where('status', isEqualTo: 'pending').get();
+    final sentQ =
+        await _db.collection('sms_tasks').where('status', isEqualTo: 'sent').get();
     return {'pending': pendingQ.size, 'sent': sentQ.size};
   }
 }

@@ -6,7 +6,12 @@ class SmsTask {
   final String message;
   final int credit;
 
-  SmsTask({required this.id, required this.phone, required this.message, required this.credit});
+  SmsTask({
+    required this.id,
+    required this.phone,
+    required this.message,
+    required this.credit,
+  });
 
   factory SmsTask.fromDoc(DocumentSnapshot doc) {
     final data = doc.data() as Map<String, dynamic>;
