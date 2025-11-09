@@ -16,11 +16,7 @@ dependencies:
 
 # ⚙️ Background + SMS
   workmanager: ^0.9.0+3
-
-  sms_advanced:
-    git:
-      url: https://github.com/babariviere/sms_advanced
-      ref: main
+  flutter_sms_plus: ^2.0.3
 
   # ⚡ System access
   permission_handler: ^11.4.0
