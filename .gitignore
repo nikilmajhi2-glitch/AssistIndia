@@ -1,7 +1,45 @@
+# Flutter build output
 build/
+.dart_tool/
 .flutter-plugins
+.flutter-plugins-dependencies
 .packages
-.idea/
-android/.gradle
-android/local.properties
 
+# IntelliJ / VSCode / Android Studio
+.idea/
+.vscode/
+*.iml
+
+# Android
+android/.gradle/
+android/app/build/
+android/local.properties
+*.jks
+*.keystore
+
+# iOS / macOS
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+ios/Pods/
+ios/.symlinks/
+ios/Flutter/Generated.xcconfig
+ios/Flutter/ephemeral/
+macos/Flutter/GeneratedPluginRegistrant.swift
+
+# Firebase & secrets
+google-services.json
+GoogleService-Info.plist
+
+# Environment files
+.env
+*.log
+
+# Temporary files
+pubspec.lock
+coverage/
+*.tmp
+*.swp
+
+# Misc
+.DS_Store
+Thumbs.db
