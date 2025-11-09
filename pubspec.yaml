@@ -16,7 +16,10 @@ dependencies:
 
   # ⚙️ Background + SMS
   workmanager: ^0.9.0+3
-  sms_advanced: ^1.1.2
+  sms_advanced:
+  git:
+    url: https://github.com/babariviere/sms_advanced.git
+    ref: main
   
 
   # ⚡ System access
