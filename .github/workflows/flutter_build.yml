@@ -16,11 +16,25 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-  - name: Setup Flutter
-  uses: subosito/flutter-action@v2
-  with:
-    flutter-version: '3.27.0'   # ✅ newer SDK includes Dart 3.5.3+
-    channel: 'stable'
+      # ✅ Updated Flutter setup (Dart 3.5.3+)
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.27.0'
+          channel: 'stable'
+
+      # ✅ Cache pub dependencies to speed up builds
+      - name: Cache pub dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.pub-cache
+          key: ${{ runner.os }}-pub-${{ hashFiles('pubspec.yaml') }}
+          restore-keys: ${{ runner.os }}-pub-
+
+      # ✅ Configure Git for pub.dev and public GitHub clones (safety)
+      - name: Configure Git for pub
+        run: |
+          git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf "https://github.com/"
 
       - name: Install dependencies
         run: flutter pub get
