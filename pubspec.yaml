@@ -13,7 +13,7 @@ dependencies:
   firebase_auth: ^5.2.0
   workmanager: ^0.5.2
   sms_advanced: ^1.1.2
-flutter_sms_inbox: ^1.0.5
+  flutter_sms_inbox: ^1.0.5
   permission_handler: ^11.1.0
   shared_preferences: ^2.3.2
   provider: ^6.0.5
