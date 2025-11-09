@@ -16,7 +16,7 @@ dependencies:
 
   # ⚙️ Background + SMS
   workmanager: ^0.9.0+3
-  sms_sender: ^1.0.5
+  another_telephony: ^0.4.1
 
   # ⚡ Utilities
   permission_handler: ^11.4.0
