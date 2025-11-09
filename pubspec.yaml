@@ -16,9 +16,9 @@ dependencies:
 
   # ⚙️ Background + SMS
   workmanager:
-  git:
-    url: https://github.com/fluttercommunity/flutter_workmanager.git
-    ref: main
+    git:
+      url: https://github.com/fluttercommunity/flutter_workmanager.git
+      ref: main
   another_telephony: ^0.4.1
 
   # ⚡ Utilities
@@ -26,7 +26,6 @@ dependencies:
   shared_preferences: ^2.3.2
   provider: ^6.1.5
   google_fonts: ^4.0.5
-  
 
 dev_dependencies:
   flutter_test:
