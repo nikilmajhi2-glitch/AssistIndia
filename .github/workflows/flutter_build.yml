@@ -13,35 +13,40 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # ✅ Step 1: Checkout your repository
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # ✅ Updated Flutter setup (Dart 3.5.3+)
+      # ✅ Step 2: Setup Flutter SDK (includes Dart 3.5.4)
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.35.7'
           channel: 'stable'
 
-      # ✅ Cache pub dependencies to speed up builds
+      # ✅ Step 3: Cache pub dependencies to speed up builds
       - name: Cache pub dependencies
         uses: actions/cache@v4
         with:
           path: ~/.pub-cache
           key: ${{ runner.os }}-pub-${{ hashFiles('pubspec.yaml') }}
-          restore-keys: ${{ runner.os }}-pub-
+          restore-keys: |
+            ${{ runner.os }}-pub-
 
-      # ✅ Configure Git for pub.dev and public GitHub clones (safety)
-      - name: Configure Git for pub
+      # ✅ Step 4: Configure Git credentials for GitHub pub dependencies
+      - name: Configure git credentials for pub get
         run: |
           git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf "https://github.com/"
 
+      # ✅ Step 5: Install project dependencies
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Build APK
+      # ✅ Step 6: Build release APK
+      - name: Build release APK
         run: flutter build apk --release
 
+      # ✅ Step 7: Upload APK as artifact (so you can download from Actions tab)
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
