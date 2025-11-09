@@ -14,8 +14,12 @@ dependencies:
   cloud_firestore: ^5.6.12
   firebase_auth: ^5.7.0
 
-  # ⚙️ Background + SMS
-  workmanager: ^0.9.0+3
+  # ⚙️ Background + SMS (V2)
+  workmanager:
+    git:
+      url: https://github.com/fluttercommunity/flutter_workmanager.git
+      ref: main
+      path: workmanager
   another_telephony: ^0.4.1
 
   # ⚡ Utilities
