@@ -1,21 +1,23 @@
-import 'package:telephony_plus/telephony_plus.dart';
+import 'package:sms_sender/sms_sender.dart';
 
 class SmsService {
-  static final TelephonyPlus _telephony = TelephonyPlus.instance;
-
-  /// Sends an SMS using the chosen SIM slot.
-  /// [simSlot] = 0 for SIM1, 1 for SIM2 (if dual SIM supported)
+  /// Sends an SMS message using the selected SIM slot.
+  /// [simSlot] = 0 → SIM1, [simSlot] = 1 → SIM2 (if dual SIM supported)
   static Future<bool> sendSms(String to, String message, {required int simSlot}) async {
     try {
-      await _telephony.sendSms(
-        to: to,
-        message: message,
-        simSlot: simSlot,
-      );
+      final sender = SmsSender();
+
+      // Build SMS message with SIM slot
+      final SmsMessage sms = SmsMessage(to, message)
+        ..simSlot = simSlot;
+
+      // Send the SMS
+      sender.sendSms(sms);
+
       print('✅ SMS sent to $to using SIM ${simSlot + 1}');
       return true;
     } catch (e) {
-      print('❌ SMS send failed for $to: $e');
+      print('❌ Failed to send SMS to $to: $e');
       return false;
     }
   }
